@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>GameXNft Shop — bản 3.0</title>
+<title>GameXNft Shop — bản 4.0 (preview fixed)</title>
 
 <!-- Font Awesome for icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
@@ -37,7 +37,7 @@ body{
   line-height:1.35;
 }
 
-/* Header (bản 3.0) */
+/* Header (bản 4.0) */
 .header {
   max-width:1200px;
   margin:0 auto 18px;
@@ -63,8 +63,6 @@ body{
   -webkit-background-clip:text; background-clip:text; color:transparent;
   text-shadow: 0 8px 30px rgba(0,0,0,0.5);
 }
-
-/* neon/pulse for header text (subtle) */
 .header h1.neon {
   animation: neonPulse 2.6s ease-in-out infinite alternate;
 }
@@ -74,7 +72,7 @@ body{
 }
 .header p { margin:8px 0 0; color:var(--muted); font-size:14px; }
 
-/* Top-right compact icons (Discord/Telegram quick links) */
+/* Top-right quick icons */
 .top-right {
   position:fixed; right:18px; top:18px; display:flex; gap:10px; z-index:60;
 }
@@ -115,7 +113,7 @@ body{
 /* main container */
 .container { max-width:1200px; margin:18px auto; padding:0 8px; }
 
-/* filter controls: fix dropdown readability and hover color */
+/* filter controls */
 .controls { display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:14px; }
 .controls input, .controls select {
   padding:10px 12px; border-radius:10px; border:1px solid rgba(255,255,255,0.06);
@@ -128,10 +126,9 @@ body{
   background-image: url('data:image/svg+xml;utf8,<svg fill="%23e6eef8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>');
   background-repeat:no-repeat; background-position:right 10px center; background-size:16px;
 }
-/* Ensure dropdown items readable */
 .controls select option { background:#0f1724; color:var(--text); padding:8px; }
 
-/* grid & cards (preview large) */
+/* grid & cards */
 .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:16px; }
 .card {
   background:var(--panel); padding:14px; border-radius:12px; border:1px solid rgba(255,255,255,0.04);
@@ -152,7 +149,7 @@ body{
 .meta-row { display:flex; justify-content:space-between; align-items:center; gap:8px; margin-top:8px; color:var(--muted); font-size:13px; }
 .contact-btn { background: linear-gradient(90deg,var(--accent-a),var(--accent-b)); color:#041022; padding:8px 12px; border-radius:10px; text-decoration:none; font-weight:800; }
 
-/* announcement banner (inserted under account list) */
+/* announcement banner */
 .announce {
   max-width:1200px; margin:20px auto; padding:14px; border-radius:12px;
   background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
@@ -160,9 +157,8 @@ body{
 }
 .announce .text { flex:1 1 520px; }
 .announce .actions { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
-.announce .actions .btn { padding:10px 14px; border-radius:10px; font-weight:800; text-decoration:none; }
 
-/* footer (icons) */
+/* footer icons */
 .footer {
   max-width:1200px; margin:24px auto 0; text-align:center; color:var(--muted);
 }
@@ -178,6 +174,13 @@ body{
   box-shadow:0 16px 40px rgba(56,189,248,0.12);
   color:#fff;
   filter: drop-shadow(0 0 12px rgba(56,189,248,0.12));
+}
+
+/* tooltip simple */
+.icon[title]{ position:relative; }
+.icon[title]:hover::after{
+  content: attr(title); position:absolute; bottom:calc(100% + 8px); left:50%; transform:translateX(-50%);
+  background:rgba(0,0,0,0.6); color:#fff; padding:6px 8px; border-radius:6px; font-size:12px; white-space:nowrap;
 }
 
 /* small screens */
@@ -196,12 +199,11 @@ body{
   <a href="https://t.me" target="_blank" title="Telegram" rel="noopener"><i class="fa-brands fa-telegram"></i></a>
 </div>
 
-<!-- header (bản 3.0) -->
+<!-- header -->
 <div class="header" role="banner" aria-label="GameXNft Shop header">
   <div class="brand" style="display:block">
     <div style="display:flex;align-items:center;justify-content:center;gap:14px">
       <div class="logo" aria-hidden="true">
-        <!-- game icon in logo -->
         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" aria-hidden="true">
           <path d="M6 12h12M9 9v6M15 9v6" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
@@ -253,7 +255,7 @@ body{
   <!-- grid -->
   <div id="grid" class="grid" aria-live="polite"></div>
 
-  <!-- announcement (your text restored) -->
+  <!-- announcement (restored) -->
   <div class="announce" role="note" aria-live="polite">
     <div class="text">
       <strong>Accounts updated daily</strong><br>
@@ -265,35 +267,30 @@ body{
     </div>
   </div>
 
-  <div class="note" style="margin-top:12px;color:var(--muted);font-size:13px;text-align:center">Click the preview image to open the folder with full screenshots. Google Sheet updates sync automatically every 30s (or press Reload).</div>
+  <div class="note" style="margin-top:12px;color:var(--muted);font-size:13px;text-align:center">Click the preview image to open the folder with full screenshots. Click the reload button to update the latest accounts!.</div>
 </div>
 
-<!-- footer with 5 icons (Discord, Telegram, PayPal, Crypto, TrustWallet) -->
+<!-- footer with 5 icons -->
 <div class="footer" role="contentinfo" aria-label="footer">
   <div style="font-size:13px;color:var(--muted);margin-bottom:8px;text-align:center">Accounts updated daily — safe payments</div>
 
   <div class="icon-row" style="margin-top:6px">
-    <!-- Discord -->
     <a class="icon" href="https://discord.gg/wsdwwk9sQF" title="Discord" target="_blank" rel="noopener" aria-label="Discord">
       <i class="fa-brands fa-discord" style="font-size:20px;color:var(--accent-a)"></i>
     </a>
 
-    <!-- Telegram -->
     <a class="icon" href="https://t.me" title="Telegram" target="_blank" rel="noopener" aria-label="Telegram">
       <i class="fa-brands fa-telegram" style="font-size:20px;color:#38a1f3"></i>
     </a>
 
-    <!-- PayPal -->
     <a class="icon" href="#" title="PayPal" target="_blank" rel="noopener" aria-label="PayPal">
       <i class="fa-brands fa-paypal" style="font-size:20px;color:#1e90ff"></i>
     </a>
 
-    <!-- Crypto (Bitcoin as representative) -->
     <a class="icon" href="#" title="Crypto" target="_blank" rel="noopener" aria-label="Crypto">
       <i class="fa-brands fa-bitcoin" style="font-size:20px;color:#f2a900"></i>
     </a>
 
-    <!-- TrustWallet (shield icon as proxy) -->
     <a class="icon" href="#" title="TrustWallet" target="_blank" rel="noopener" aria-label="TrustWallet">
       <i class="fa-solid fa-shield-halved" style="font-size:18px;color:#2ecc71"></i>
     </a>
@@ -302,14 +299,11 @@ body{
   <div style="height:18px"></div>
 </div>
 
-<!-- === Script: Google Sheets sync + render (keeps previous logic, one-large-preview per account) === -->
+<!-- === Script: Google Sheets sync + render (improved preview handling + iframe fallback) === -->
 <script>
 /*
   Required Google Sheet header columns (case-insensitive):
   id, title, game, info, townhall, status, contactlink, preview, folder
-
-  Note: For Google Drive images use a direct-display URL such as:
-  https://drive.google.com/uc?export=view&id=FILE_ID
 */
 
 const SHEET_ID = "1Dqa0QocIye1IYaFVl_1SBKXa8awyHrnWy6LY3-65YXg";
@@ -376,13 +370,60 @@ function rowsToObjects(rows){
 function clearGrid(){ document.getElementById('grid').innerHTML = ''; }
 function escapeHtml(s){ if(!s) return ''; return s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;'); }
 
-function getPreviewSrc(url){
-  if(!url) return '';
-  if(/^data:image\//i.test(url)) return url;
-  if(/\.(png|jpe?g|webp|gif|svg)(\?.*)?$/i.test(url)) return url;
-  return url;
+/* normalizeDriveLink: convert many Drive link patterns into canonical urls & detect folder */
+function normalizeDriveLink(input){
+  if(!input) return null;
+  const s = input.trim();
+
+  // folder pattern
+  const folderRe = /drive\.google\.com\/drive\/folders\/([a-zA-Z0-9_-]{5,})/i;
+  const fm = s.match(folderRe);
+  if(fm) return { isFolder:true, folderId: fm[1], folderUrl: s };
+
+  // try to extract file id from many patterns
+  const patterns = [
+    /\/file\/d\/([a-zA-Z0-9_-]{10,})/i,
+    /\/d\/([a-zA-Z0-9_-]{10,})/i,
+    /open\?id=([a-zA-Z0-9_-]{10,})/i,
+    /uc\?export=view&id=([a-zA-Z0-9_-]{10,})/i,
+    /id=([a-zA-Z0-9_-]{10,})/i
+  ];
+  let id = null;
+  for(const re of patterns){
+    const m = s.match(re);
+    if(m && m[1]){ id = m[1]; break; }
+  }
+  if(!id && /^[a-zA-Z0-9_-]{10,}$/.test(s)) id = s;
+
+  if(!id){
+    // not a drive link; check if direct image url
+    if(/\.(png|jpe?g|webp|gif|svg)(\?.*)?$/i.test(s)) return { isDrive:false, imgUrl: s };
+    return { isDrive:false, raw: s };
+  }
+
+  return {
+    isDrive: true,
+    id,
+    imgUrl: `https://drive.google.com/uc?export=view&id=${id}`,
+    thumbnail: `https://drive.google.com/thumbnail?id=${id}&sz=w1200`,
+    downloadUrl: `https://drive.google.com/uc?export=download&id=${id}`,
+    iframe: `https://drive.google.com/file/d/${id}/preview`,
+    viewUrl: `https://drive.google.com/file/d/${id}/view?usp=sharing`
+  };
 }
 
+/* svg placeholder generator for non-image previews (folder fallback) */
+function folderPlaceholderDataUrl(label){
+  const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='700' viewBox='0 0 1200 700'>
+    <rect width='100%' height='100%' fill='#0f1724'/>
+    <text x='50%' y='45%' fill='#9aa6bf' font-size='36' font-family='Arial' text-anchor='middle'>Preview not available</text>
+    <text x='50%' y='57%' fill='#9aa6bf' font-size='20' font-family='Arial' text-anchor='middle'>Click to open folder/screenshots</text>
+    <text x='50%' y='85%' fill='#6ee7ff' font-size='16' font-family='Arial' text-anchor='middle'>${label || ''}</text>
+  </svg>`;
+  return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+}
+
+/* Render cards with improved Drive handling + iframe fallback */
 function renderCards(items){
   const grid = document.getElementById('grid');
   clearGrid();
@@ -404,18 +445,95 @@ function renderCards(items){
     const st = document.createElement('div'); st.className = 'status ' + (it.status==='sold' ? 'sold' : 'available');
     st.textContent = (it.status==='sold' ? 'SOLD' : 'AVAILABLE'); card.appendChild(st);
 
-    if(it.preview){
+    // determine preview using normalizeDriveLink
+    const previewUrlRaw = (it.preview || '').trim();
+    const normalized = normalizeDriveLink(previewUrlRaw);
+
+    if(normalized && normalized.isFolder){
+      // show folder placeholder
       const img = document.createElement('img'); img.className = 'preview-image';
-      img.src = getPreviewSrc(it.preview);
+      img.src = folderPlaceholderDataUrl(it.title || '');
+      img.alt = it.title ? `${it.title} preview (folder)` : 'Preview folder';
+      img.loading = 'lazy';
+      img.onclick = ()=> window.open(it.folder || normalized.folderUrl, '_blank');
+      img.onerror = ()=> { img.style.opacity = .35; };
+      card.appendChild(img);
+      const hint = document.createElement('div'); hint.className = 'preview-hint';
+      hint.textContent = 'Click to open folder with full screenshots';
+      card.appendChild(hint);
+
+    } else if(normalized && normalized.isDrive){
+      // prefer using <img> for fast previews; fallback to thumbnail then iframe
+      const img = document.createElement('img'); img.className = 'preview-image';
       img.alt = it.title ? `${it.title} preview` : 'Preview';
       img.loading = 'lazy';
       img.referrerPolicy = 'no-referrer';
-      img.onclick = ()=> window.open((it.folder || it.preview), '_blank');
-      img.onerror = ()=> { img.style.opacity = .35; img.title = 'Preview failed to load'; };
-      card.appendChild(img);
+      img.style.objectFit = 'cover';
 
+      // track fallback attempts
+      img._fallbackStage = 0; // 0 = haven't tried, 1 = tried thumbnail, 2 = replaced with iframe
+
+      // initial src attempt: uc?export=view
+      img.src = normalized.imgUrl;
+
+      img.onclick = ()=> {
+        // open folder if provided, otherwise open Drive viewUrl, otherwise the image
+        const openUrl = it.folder || normalized.viewUrl || normalized.imgUrl || previewUrlRaw;
+        if(openUrl) window.open(openUrl, '_blank');
+      };
+
+      img.onerror = ()=> {
+        // if first fail -> try thumbnail
+        if(img._fallbackStage === 0 && normalized.thumbnail){
+          img._fallbackStage = 1;
+          img.src = normalized.thumbnail;
+          return;
+        }
+        // if second fail -> replace with iframe preview
+        if(img._fallbackStage <= 1 && normalized.iframe){
+          img._fallbackStage = 2;
+          const frame = document.createElement('iframe');
+          frame.src = normalized.iframe;
+          frame.title = it.title ? `${it.title} preview iframe` : 'Preview iframe';
+          frame.style.width = '100%';
+          frame.style.height = '320px';
+          frame.style.border = '0';
+          frame.style.borderRadius = '12px';
+          frame.style.background = 'transparent';
+          // clicking iframe wrapper opens Drive view in new tab (safer)
+          const wrapper = document.createElement('div');
+          wrapper.style.cursor = 'pointer';
+          wrapper.onclick = ()=> window.open(normalized.viewUrl || it.folder || previewUrlRaw, '_blank');
+          wrapper.appendChild(frame);
+          // replace img with wrapper
+          card.replaceChild(wrapper, img);
+          const hint = document.createElement('div'); hint.className = 'preview-hint';
+          hint.textContent = 'Preview (iframe). Click to open on Drive.';
+          card.appendChild(hint);
+          return;
+        }
+        // final fallback: placeholder
+        img.src = folderPlaceholderDataUrl(it.title || '');
+        img.style.opacity = .8;
+        img.title = 'Preview failed to load — click to open folder';
+      };
+
+      card.appendChild(img);
       const hint = document.createElement('div'); hint.className = 'preview-hint';
-      hint.textContent = 'Click preview image to open full folder/screenshots';
+      hint.textContent = 'Click on the image above to see all account information';
+      card.appendChild(hint);
+
+    } else if(normalized && normalized.isDrive === false && normalized.imgUrl){
+      // direct public image url (non-drive)
+      const img = document.createElement('img'); img.className = 'preview-image';
+      img.src = normalized.imgUrl;
+      img.alt = it.title ? `${it.title} preview` : 'Preview';
+      img.loading = 'lazy';
+      img.onclick = ()=> { const openUrl = it.folder || previewUrlRaw || normalized.imgUrl; if(openUrl) window.open(openUrl, '_blank'); };
+      img.onerror = ()=> { img.src = folderPlaceholderDataUrl(it.title || ''); img.style.opacity = .8; };
+      card.appendChild(img);
+      const hint = document.createElement('div'); hint.className = 'preview-hint';
+      hint.textContent = 'Click preview to open full screenshots';
       card.appendChild(hint);
     }
 
@@ -432,6 +550,7 @@ function renderCards(items){
   });
 }
 
+/* filters building + applying */
 function buildFilters(items){
   const games = Array.from(new Set(items.map(i=>i.game).filter(Boolean))).sort();
   const towns = Array.from(new Set(items.map(i=>i.townhall).filter(Boolean))).sort((a,b)=>{
@@ -460,7 +579,7 @@ function applyFilters(items){
   });
 }
 
-/* ---------- Load & Poll ---------- */
+/* Load & Poll */
 let LAST_DATA = [];
 async function loadAndRender(){
   showError(null);
