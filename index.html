@@ -1,0 +1,493 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>GameXNft Shop — bản 3.0</title>
+
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+<style>
+:root{
+  --bg:#071026;
+  --panel:#0f1724;
+  --card:#111827;
+  --muted:#9aa6bf;
+  --text:#e6eef8;
+  --accent-a:#38bdf8;
+  --accent-b:#f472b6;
+  --accent-c:#6ee7ff;
+  --success:#34d399;
+  --danger:#fb7185;
+  --glass: rgba(255,255,255,0.03);
+}
+
+/* Base */
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:Inter,system-ui,Segoe UI,Roboto,Arial;
+  background: linear-gradient(180deg,var(--bg),#041022);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  padding:18px;
+  line-height:1.35;
+}
+
+/* Header (bản 3.0) */
+.header {
+  max-width:1200px;
+  margin:0 auto 18px;
+  text-align:center;
+  padding:22px 16px;
+  border-radius:14px;
+  background: linear-gradient(135deg, rgba(56,189,248,0.06), rgba(244,114,182,0.04));
+  border:1px solid rgba(255,255,255,0.03);
+  box-shadow: 0 10px 40px rgba(2,6,23,0.6);
+}
+.header .brand { display:inline-flex; align-items:center; gap:14px; }
+.header .logo {
+  width:66px; height:66px; border-radius:14px; display:grid; place-items:center;
+  background: radial-gradient(circle at 30% 30%, var(--accent-c), transparent 40%), linear-gradient(90deg,var(--accent-a),var(--accent-b));
+  box-shadow: 0 8px 28px rgba(56,189,248,0.12), inset 0 -6px 18px rgba(255,255,255,0.02);
+  transform-origin:center; animation: float 3s ease-in-out infinite;
+}
+@keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-6px);} }
+
+.header h1 {
+  margin:0; font-size:40px; font-weight:900; letter-spacing:1px;
+  background: linear-gradient(90deg,var(--accent-a),var(--accent-b));
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  text-shadow: 0 8px 30px rgba(0,0,0,0.5);
+}
+
+/* neon/pulse for header text (subtle) */
+.header h1.neon {
+  animation: neonPulse 2.6s ease-in-out infinite alternate;
+}
+@keyframes neonPulse {
+  0% { text-shadow: 0 0 8px rgba(56,189,248,0.6), 0 0 18px rgba(244,114,182,0.45); }
+  100% { text-shadow: 0 0 20px rgba(244,114,182,0.7), 0 0 36px rgba(56,189,248,0.55); }
+}
+.header p { margin:8px 0 0; color:var(--muted); font-size:14px; }
+
+/* Top-right compact icons (Discord/Telegram quick links) */
+.top-right {
+  position:fixed; right:18px; top:18px; display:flex; gap:10px; z-index:60;
+}
+.top-right a {
+  width:44px;height:44px;border-radius:10px;display:inline-grid;place-items:center;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border:1px solid rgba(255,255,255,0.04);
+  color:var(--accent-a); text-decoration:none; transition:transform .14s,box-shadow .14s,color .14s;
+}
+.top-right a:hover{ transform:translateY(-4px); color:#fff; box-shadow:0 10px 30px rgba(0,0,0,0.6); }
+
+/* Hero */
+.hero {
+  max-width:1200px; margin:16px auto; padding:18px; border-radius:14px;
+  background:
+    radial-gradient(800px 120px at 10% -10%, rgba(56,189,248,0.06), transparent 40%),
+    radial-gradient(800px 120px at 90% -20%, rgba(244,114,182,0.05), transparent 40%),
+    linear-gradient(135deg, rgba(56,189,248,0.03), rgba(244,114,182,0.02));
+  border:1px solid rgba(255,255,255,0.03);
+  display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px;
+}
+.hero .left { flex:1 1 520px; min-width:220px; text-align:left; }
+.hero h2{ margin:0 0 6px; font-size:22px; color:var(--accent-a); }
+.hero p { margin:0; color:var(--muted); font-size:14px; }
+.cta-row { margin-top:10px; display:flex; gap:10px; flex-wrap:wrap; }
+.btn {
+  padding:10px 14px; border-radius:10px; text-decoration:none; font-weight:800;
+  color:#041022; background:linear-gradient(90deg,var(--accent-a),var(--accent-b));
+}
+.btn.ghost { background:transparent; color:var(--text); border:1px solid rgba(255,255,255,0.06); }
+
+/* hero stats */
+.hero .stats { display:flex; gap:12px; align-items:center; }
+.stat { padding:10px 14px; border-radius:12px; background:var(--glass); text-align:center; min-width:100px; }
+.stat .val { font-weight:900; font-size:18px; color:var(--accent-a); }
+.stat .lbl { font-size:12px; color:var(--muted); }
+
+/* main container */
+.container { max-width:1200px; margin:18px auto; padding:0 8px; }
+
+/* filter controls: fix dropdown readability and hover color */
+.controls { display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:14px; }
+.controls input, .controls select {
+  padding:10px 12px; border-radius:10px; border:1px solid rgba(255,255,255,0.06);
+  background: rgba(255,255,255,0.02); color:var(--text); font-size:14px; min-width:150px;
+  appearance:none; -webkit-appearance:none; -moz-appearance:none;
+}
+.controls input::placeholder{ color:#c6d5ee; }
+.controls select {
+  padding-right:42px;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%23e6eef8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>');
+  background-repeat:no-repeat; background-position:right 10px center; background-size:16px;
+}
+/* Ensure dropdown items readable */
+.controls select option { background:#0f1724; color:var(--text); padding:8px; }
+
+/* grid & cards (preview large) */
+.grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:16px; }
+.card {
+  background:var(--panel); padding:14px; border-radius:12px; border:1px solid rgba(255,255,255,0.04);
+  display:flex; flex-direction:column; gap:10px; transition:transform .15s, box-shadow .15s;
+}
+.card:hover { transform:translateY(-6px); box-shadow:0 18px 40px rgba(2,6,23,0.7); border-color: rgba(56,189,248,0.12); }
+.title { font-weight:900; font-size:16px; display:flex; justify-content:center; gap:8px; }
+.desc { color:var(--muted); font-size:13px; text-align:center; padding:0 8px; }
+.status { display:inline-block; padding:6px 10px; border-radius:999px; font-weight:800; font-size:12px; margin:0 auto; }
+.status.available { color:var(--success); background:rgba(52,211,153,0.06); border:1px solid rgba(52,211,153,0.08); }
+.status.sold { color:var(--danger); background:rgba(251,113,133,0.06); border:1px solid rgba(251,113,133,0.08); }
+.preview-image {
+  width:100%; border-radius:12px; cursor:pointer; object-fit:cover; height:200px; transition:transform .18s, box-shadow .18s;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+}
+.preview-image:hover { transform:scale(1.02); box-shadow:0 10px 30px rgba(0,0,0,0.6); }
+.preview-hint { color:var(--muted); font-size:12px; text-align:center; margin-top:6px; }
+.meta-row { display:flex; justify-content:space-between; align-items:center; gap:8px; margin-top:8px; color:var(--muted); font-size:13px; }
+.contact-btn { background: linear-gradient(90deg,var(--accent-a),var(--accent-b)); color:#041022; padding:8px 12px; border-radius:10px; text-decoration:none; font-weight:800; }
+
+/* announcement banner (inserted under account list) */
+.announce {
+  max-width:1200px; margin:20px auto; padding:14px; border-radius:12px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border:1px solid rgba(255,255,255,0.04); color:var(--muted); display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap;
+}
+.announce .text { flex:1 1 520px; }
+.announce .actions { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+.announce .actions .btn { padding:10px 14px; border-radius:10px; font-weight:800; text-decoration:none; }
+
+/* footer (icons) */
+.footer {
+  max-width:1200px; margin:24px auto 0; text-align:center; color:var(--muted);
+}
+.footer .icon-row { display:flex; justify-content:center; gap:18px; margin-top:12px; flex-wrap:wrap; }
+.footer a.icon, .footer i.icon {
+  width:48px; height:48px; display:grid; place-items:center; border-radius:10px; color:var(--accent-a);
+  background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02)); border:1px solid rgba(255,255,255,0.04);
+  transition: all .18s ease;
+  text-decoration:none;
+}
+.footer a.icon:hover, .footer i.icon:hover {
+  transform:translateY(-6px) scale(1.08);
+  box-shadow:0 16px 40px rgba(56,189,248,0.12);
+  color:#fff;
+  filter: drop-shadow(0 0 12px rgba(56,189,248,0.12));
+}
+
+/* small screens */
+@media(max-width:880px){
+  .header h1{ font-size:28px; }
+  .preview-image{ height:160px; }
+  .hero { padding:14px; }
+}
+</style>
+</head>
+<body>
+
+<!-- top-right quick links -->
+<div class="top-right" aria-hidden="false">
+  <a href="https://discord.gg/wsdwwk9sQF" target="_blank" title="Discord" rel="noopener"><i class="fa-brands fa-discord"></i></a>
+  <a href="https://t.me" target="_blank" title="Telegram" rel="noopener"><i class="fa-brands fa-telegram"></i></a>
+</div>
+
+<!-- header (bản 3.0) -->
+<div class="header" role="banner" aria-label="GameXNft Shop header">
+  <div class="brand" style="display:block">
+    <div style="display:flex;align-items:center;justify-content:center;gap:14px">
+      <div class="logo" aria-hidden="true">
+        <!-- game icon in logo -->
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M6 12h12M9 9v6M15 9v6" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div style="display:inline-block;text-align:left">
+        <h1 class="neon">GameXNft Shop</h1>
+        <div style="color:var(--muted);font-size:13px;margin-top:6px">Trusted accounts • Fast support • 96% positive feedback</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- hero -->
+<section class="hero" aria-label="promo">
+  <div class="left">
+    <h2>Accounts updated <span style="background:linear-gradient(90deg,var(--accent-a),var(--accent-b));-webkit-background-clip:text;background-clip:text;color:transparent">daily</span></h2>
+    <p>Join our Discord for instant updates, special offers and giveaways. Limited stock — first come, first served.</p>
+    <div class="cta-row">
+      <a class="btn" href="https://discord.gg/wsdwwk9sQF" target="_blank" rel="noopener"><i class="fa-brands fa-discord"></i>&nbsp;Message on Discord</a>
+      <a class="btn ghost" href="https://t.me" target="_blank" rel="noopener"><i class="fa-brands fa-telegram"></i>&nbsp;Message on Telegram</a>
+    </div>
+  </div>
+
+  <div class="stats" aria-hidden="false">
+    <div class="stat"><div class="val">868+</div><div class="lbl">Accounts</div></div>
+    <div class="stat"><div class="val">600+</div><div class="lbl">Sold</div></div>
+    <div class="stat small"><div class="val">96%</div><div class="lbl">Positive feedback (EpicNPC, PlayerAuctions, G2G)</div></div>
+  </div>
+</section>
+
+<!-- main container -->
+<div class="container">
+
+  <!-- controls -->
+  <div class="controls" role="region" aria-label="filters">
+    <input id="search" placeholder="Search by title, id or info..." aria-label="Search"/>
+    <select id="gameFilter" aria-label="Game filter"><option value="">All games</option></select>
+    <select id="townhallFilter" aria-label="Town Hall filter"><option value="">All Town Halls</option></select>
+    <select id="statusFilter" aria-label="Status filter">
+      <option value="">All statuses</option>
+      <option value="available">Available</option>
+      <option value="sold">Sold</option>
+    </select>
+    <button id="reloadBtn" class="btn" style="padding:8px 12px">Reload</button>
+  </div>
+
+  <div id="error" style="display:none;margin-bottom:10px;color:#ffb4b4;background:rgba(255,180,180,0.03);padding:10px;border-radius:8px"></div>
+
+  <!-- grid -->
+  <div id="grid" class="grid" aria-live="polite"></div>
+
+  <!-- announcement (your text restored) -->
+  <div class="announce" role="note" aria-live="polite">
+    <div class="text">
+      <strong>Accounts updated daily</strong><br>
+      Join our Discord for instant updates, special offers and giveaways. Limited stock — first come, first served.
+    </div>
+    <div class="actions">
+      <a class="btn" href="https://discord.gg/wsdwwk9sQF" target="_blank" rel="noopener"><i class="fa-brands fa-discord"></i>&nbsp;Message on Discord</a>
+      <a class="btn ghost" href="https://t.me" target="_blank" rel="noopener"><i class="fa-brands fa-telegram"></i>&nbsp;Message on Telegram</a>
+    </div>
+  </div>
+
+  <div class="note" style="margin-top:12px;color:var(--muted);font-size:13px;text-align:center">Click the preview image to open the folder with full screenshots. Google Sheet updates sync automatically every 30s (or press Reload).</div>
+</div>
+
+<!-- footer with 5 icons (Discord, Telegram, PayPal, Crypto, TrustWallet) -->
+<div class="footer" role="contentinfo" aria-label="footer">
+  <div style="font-size:13px;color:var(--muted);margin-bottom:8px;text-align:center">Accounts updated daily — safe payments</div>
+
+  <div class="icon-row" style="margin-top:6px">
+    <!-- Discord -->
+    <a class="icon" href="https://discord.gg/wsdwwk9sQF" title="Discord" target="_blank" rel="noopener" aria-label="Discord">
+      <i class="fa-brands fa-discord" style="font-size:20px;color:var(--accent-a)"></i>
+    </a>
+
+    <!-- Telegram -->
+    <a class="icon" href="https://t.me" title="Telegram" target="_blank" rel="noopener" aria-label="Telegram">
+      <i class="fa-brands fa-telegram" style="font-size:20px;color:#38a1f3"></i>
+    </a>
+
+    <!-- PayPal -->
+    <a class="icon" href="#" title="PayPal" target="_blank" rel="noopener" aria-label="PayPal">
+      <i class="fa-brands fa-paypal" style="font-size:20px;color:#1e90ff"></i>
+    </a>
+
+    <!-- Crypto (Bitcoin as representative) -->
+    <a class="icon" href="#" title="Crypto" target="_blank" rel="noopener" aria-label="Crypto">
+      <i class="fa-brands fa-bitcoin" style="font-size:20px;color:#f2a900"></i>
+    </a>
+
+    <!-- TrustWallet (shield icon as proxy) -->
+    <a class="icon" href="#" title="TrustWallet" target="_blank" rel="noopener" aria-label="TrustWallet">
+      <i class="fa-solid fa-shield-halved" style="font-size:18px;color:#2ecc71"></i>
+    </a>
+  </div>
+
+  <div style="height:18px"></div>
+</div>
+
+<!-- === Script: Google Sheets sync + render (keeps previous logic, one-large-preview per account) === -->
+<script>
+/*
+  Required Google Sheet header columns (case-insensitive):
+  id, title, game, info, townhall, status, contactlink, preview, folder
+
+  Note: For Google Drive images use a direct-display URL such as:
+  https://drive.google.com/uc?export=view&id=FILE_ID
+*/
+
+const SHEET_ID = "1Dqa0QocIye1IYaFVl_1SBKXa8awyHrnWy6LY3-65YXg";
+const API_KEY  = "AIzaSyAluJ-zMpaL85reR_tiL4KxhePL3N7FbkM";
+const HEADER_RANGE_COLS = "A:Z";
+const REFRESH_INTERVAL = 30000; // 30s
+
+function showError(msg){
+  const el = document.getElementById('error');
+  if(!msg){ el.style.display='none'; el.textContent=''; return; }
+  el.style.display='block';
+  el.textContent = msg;
+  console.error(msg);
+}
+
+async function getFirstSheetTitle(){
+  const ts = Date.now();
+  const metaUrl = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}?fields=sheets.properties.title&key=${API_KEY}&_=${ts}`;
+  const res = await fetch(metaUrl, { cache: 'no-store' });
+  if(!res.ok){
+    const text = await res.text();
+    throw new Error(`Meta API error ${res.status}: ${text}`);
+  }
+  const j = await res.json();
+  const title = j?.sheets?.[0]?.properties?.title;
+  if(!title) throw new Error('No sheet title found in metadata.');
+  return title;
+}
+
+async function fetchSheetRows(){
+  const title = await getFirstSheetTitle();
+  const range = `${title}!${HEADER_RANGE_COLS}`;
+  const ts = Date.now();
+  const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${encodeURIComponent(range)}?key=${API_KEY}&_=${ts}`;
+  const res = await fetch(url, { cache: 'no-store' });
+  if(!res.ok){
+    const txt = await res.text();
+    throw new Error(`Values API error ${res.status}: ${txt}`);
+  }
+  const j = await res.json();
+  return j.values || [];
+}
+
+function rowsToObjects(rows){
+  if(!rows || rows.length === 0) return [];
+  const rawHeader = rows[0].map(h => (h||'').toString().trim());
+  const header = rawHeader.map(h => h.toLowerCase());
+  const out = [];
+  for(let i=1;i<rows.length;i++){
+    const row = rows[i];
+    if(!row.some(cell => (cell||'').toString().trim() !== '')) continue;
+    const obj = {};
+    header.forEach((key, idx) => { obj[key] = (row[idx] || '').toString().trim(); });
+    if(!obj.info && obj.description) obj.info = obj.description;
+    if(!obj.contactlink && obj.contact) obj.contactlink = obj.contact;
+    obj.preview = (obj.preview || '').trim();
+    obj.folder  = (obj.folder || '').trim();
+    obj.status  = (obj.status || 'available').toLowerCase();
+    out.push(obj);
+  }
+  return out;
+}
+
+function clearGrid(){ document.getElementById('grid').innerHTML = ''; }
+function escapeHtml(s){ if(!s) return ''; return s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;'); }
+
+function getPreviewSrc(url){
+  if(!url) return '';
+  if(/^data:image\//i.test(url)) return url;
+  if(/\.(png|jpe?g|webp|gif|svg)(\?.*)?$/i.test(url)) return url;
+  return url;
+}
+
+function renderCards(items){
+  const grid = document.getElementById('grid');
+  clearGrid();
+  if(!items || items.length === 0){
+    grid.innerHTML = `<div style="grid-column:1/-1;padding:18px;text-align:center;color:var(--muted)">No accounts found.</div>`;
+    return;
+  }
+  items.forEach(it => {
+    const card = document.createElement('div'); card.className = 'card';
+
+    const title = document.createElement('div'); title.className='title';
+    title.innerHTML = `<strong>${escapeHtml(it.title || '(no title)')}</strong> <span style="color:var(--muted)">[${escapeHtml(it.id||'')}]</span>`;
+    card.appendChild(title);
+
+    if(it.info){
+      const p = document.createElement('div'); p.className='desc'; p.textContent = it.info; card.appendChild(p);
+    }
+
+    const st = document.createElement('div'); st.className = 'status ' + (it.status==='sold' ? 'sold' : 'available');
+    st.textContent = (it.status==='sold' ? 'SOLD' : 'AVAILABLE'); card.appendChild(st);
+
+    if(it.preview){
+      const img = document.createElement('img'); img.className = 'preview-image';
+      img.src = getPreviewSrc(it.preview);
+      img.alt = it.title ? `${it.title} preview` : 'Preview';
+      img.loading = 'lazy';
+      img.referrerPolicy = 'no-referrer';
+      img.onclick = ()=> window.open((it.folder || it.preview), '_blank');
+      img.onerror = ()=> { img.style.opacity = .35; img.title = 'Preview failed to load'; };
+      card.appendChild(img);
+
+      const hint = document.createElement('div'); hint.className = 'preview-hint';
+      hint.textContent = 'Click preview image to open full folder/screenshots';
+      card.appendChild(hint);
+    }
+
+    const meta = document.createElement('div'); meta.className='meta-row';
+    const left = document.createElement('div'); left.innerHTML = `<div><strong style="color:var(--text)">${escapeHtml(it.game||'')}</strong></div><div style="margin-top:6px;color:var(--muted)">${escapeHtml(it.townhall||'')}</div>`;
+    const right = document.createElement('div'); const contact = document.createElement('a');
+    contact.className='contact-btn'; contact.target='_blank'; contact.rel='noopener';
+    contact.href = it.contactlink || 'https://discord.gg/wsdwwk9sQF'; contact.textContent='Contact';
+    right.appendChild(contact);
+    meta.appendChild(left); meta.appendChild(right);
+    card.appendChild(meta);
+
+    grid.appendChild(card);
+  });
+}
+
+function buildFilters(items){
+  const games = Array.from(new Set(items.map(i=>i.game).filter(Boolean))).sort();
+  const towns = Array.from(new Set(items.map(i=>i.townhall).filter(Boolean))).sort((a,b)=>{
+    const na = (a||'').match(/\d+/)?.[0], nb = (b||'').match(/\d+/)?.[0];
+    if(na && nb) return Number(nb)-Number(na);
+    return (a||'').localeCompare(b||'');
+  });
+  document.getElementById('gameFilter').innerHTML = `<option value="">All games</option>` + games.map(g=>`<option value="${escapeHtml(g)}">${escapeHtml(g)}</option>`).join('');
+  document.getElementById('townhallFilter').innerHTML = `<option value="">All Town Halls</option>` + towns.map(t=>`<option value="${escapeHtml(t)}">${escapeHtml(t)}</option>`).join('');
+}
+
+function applyFilters(items){
+  const q = document.getElementById('search').value.trim().toLowerCase();
+  const game = document.getElementById('gameFilter').value;
+  const town = document.getElementById('townhallFilter').value;
+  const status = document.getElementById('statusFilter').value;
+  return items.filter(it=>{
+    if(game && (it.game || '') !== game) return false;
+    if(town && (it.townhall || '') !== town) return false;
+    if(status && (it.status || '') !== status) return false;
+    if(q){
+      const hay = `${it.title||''} ${it.info||''} ${it.id||''} ${it.game||''}`.toLowerCase();
+      if(!hay.includes(q)) return false;
+    }
+    return true;
+  });
+}
+
+/* ---------- Load & Poll ---------- */
+let LAST_DATA = [];
+async function loadAndRender(){
+  showError(null);
+  try{
+    const rows = await fetchSheetRows();
+    if(!rows || rows.length < 1){ showError('No rows returned from the sheet. Check sharing and sheet contents.'); clearGrid(); return; }
+    const objs = rowsToObjects(rows);
+    LAST_DATA = objs;
+    buildFilters(objs);
+    renderCards(applyFilters(objs));
+  } catch(err){
+    showError(err.message || String(err));
+    clearGrid();
+    console.error(err);
+  }
+}
+
+/* events */
+document.getElementById('reloadBtn').addEventListener('click', loadAndRender);
+document.getElementById('search').addEventListener('input', ()=> renderCards(applyFilters(LAST_DATA)));
+document.getElementById('gameFilter').addEventListener('change', ()=> renderCards(applyFilters(LAST_DATA)));
+document.getElementById('townhallFilter').addEventListener('change', ()=> renderCards(applyFilters(LAST_DATA)));
+document.getElementById('statusFilter').addEventListener('change', ()=> renderCards(applyFilters(LAST_DATA)));
+
+/* init + poll */
+loadAndRender();
+setInterval(loadAndRender, REFRESH_INTERVAL);
+</script>
+</body>
+</html>
