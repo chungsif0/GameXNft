@@ -22,6 +22,7 @@
   --success:#34d399;
   --danger:#fb7185;
   --glass: rgba(255,255,255,0.03);
+  --logo-bg: #0C172E; /* <--- màu bạn yêu cầu cho nền sau logo */
 }
 
 /* Base */
@@ -50,14 +51,38 @@ body{
   box-shadow: 0 10px 40px rgba(2,6,23,0.6);
 }
 .header .brand { display:inline-flex; align-items:center; gap:14px; }
+
+/* logo container: giữ animation float giống bản 1.1,
+   nhưng nền đặt thành --logo-bg để trùng màu bạn chọn */
 .header .logo {
-  width:66px; height:66px; border-radius:14px; display:grid; place-items:center;
-  background: radial-gradient(circle at 30% 30%, var(--accent-c), transparent 40%), linear-gradient(90deg,var(--accent-a),var(--accent-b));
-  box-shadow: 0 8px 28px rgba(56,189,248,0.12), inset 0 -6px 18px rgba(255,255,255,0.02);
-  transform-origin:center; animation: float 3s ease-in-out infinite;
+  width:66px; height:66px;
+  border-radius:14px; /* giữ shape của container như bản gốc */
+  display:grid; place-items:center;
+  background: var(--logo-bg);
+  /* vẫn giữ một chút nội dung gradient/inset nhẹ như gốc để hòa với theme,
+     nhưng nền chính đã đổi thành --logo-bg */
+  box-shadow:
+    0 8px 28px rgba(56,189,248,0.08),
+    inset 0 -6px 18px rgba(255,255,255,0.02);
+  transform-origin:center;
+  animation: float 3s ease-in-out infinite;
 }
 @keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-6px);} }
 
+/* nếu logo là ảnh (supercell.webp), đặt kích thước full container,
+   KHÔNG bo tròn ảnh (giữ hình gốc vuông), và thêm glow nhẹ */
+.header .logo img {
+  width: 66px;
+  height: 66px;
+  object-fit: contain;
+  border-radius: 0; /* giữ vuông nguyên bản theo yêu cầu */
+  background: transparent;
+  display:block;
+  /* nhẹ glow để logo nổi trên nền #0F152D (không quá mạnh) */
+  box-shadow: 0 0 12px rgba(56,189,248,0.12);
+}
+
+/* Keep h1 neon/flicker from 1.1 */
 .header h1 {
   margin:0; font-size:40px; font-weight:900; letter-spacing:1px;
   background: linear-gradient(90deg,var(--accent-a),var(--accent-b));
@@ -205,9 +230,9 @@ body{
   <div class="brand" style="display:block">
     <div style="display:flex;align-items:center;justify-content:center;gap:14px">
       <div class="logo" aria-hidden="true">
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M6 12h12M9 9v6M15 9v6" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+        <!-- ĐÃ THAY: dùng ảnh logo (supercell.webp). 
+             Đặt file supercell.webp cùng thư mục với file HTML để hiển thị. -->
+        <img src="./supercell.webp" alt="Supercell Logo">
       </div>
       <div style="display:inline-block;text-align:left">
         <h1 class="neon">GameXNft Shop</h1>
@@ -616,12 +641,3 @@ setInterval(loadAndRender, REFRESH_INTERVAL);
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
